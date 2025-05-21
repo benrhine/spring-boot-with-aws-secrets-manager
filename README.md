@@ -1,5 +1,7 @@
 # spring-boot-with-aws-secrets-manager
 
+**THIS BRANCH HAS BEEN TESTED TO WORK WITH JAVA 17**
+
 Example of a SpringBoot application that can retrieve Aws Secrets. This will demonstrate being able to connect the SpringBoot
 `application.properties` to the Aws SecretManager and how to access those secrets from within the `application.properties`
 file and within the application itself in multiple ways.
