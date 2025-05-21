@@ -1,10 +1,10 @@
 package com.benrhine.spring_boot_with_aws_secrets_manager.config;
 
-import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.ConfigurableEnvironment;
 
+import javax.annotation.PostConstruct;
 
 @Configuration
 public class SecretsManagerPropertySourceConfig {
