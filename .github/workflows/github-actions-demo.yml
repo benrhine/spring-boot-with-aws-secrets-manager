@@ -47,7 +47,7 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew build
       - name: configure aws credentials
-        uses: aws-actions/configure-aws-credentials@4.3.0
+        uses: aws-actions/configure-aws-credentials@4.2.1
         with:
           role-to-assume: arn:aws:iam::998530368070:role/github_oidc_assume_role
           role-session-name: samplerolesession
