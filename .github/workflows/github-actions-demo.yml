@@ -52,8 +52,11 @@ jobs:
           role-to-assume: arn:aws:iam::792981815698:role/github_oidc_assume_role
           role-session-name: samplerolesession
           aws-region: ${{ env.AWS_REGION }}
-      # Upload a file to AWS s3
-      - name: Copy jar to s3
+      - name: List S3 Buckets
         run: |
-          aws s3 cp ./build/libs/*.jar s3://${{ env.BUCKET_NAME }}/
+          aws s3 ls
+      # Upload a file to AWS s3
+#      - name: Copy jar to s3
+#        run: |
+#          aws s3 cp ./build/libs/*.jar s3://${{ env.BUCKET_NAME }}/
 #TEST
