@@ -24,7 +24,7 @@ name: AWS example workflow
 on:
   push
 env:
-  BUCKET_NAME : "brr-test-1"
+  BUCKET_NAME : "brr-tools-test"
   AWS_REGION : "us-east-2"
 # permission can be added at job level or workflow level
 permissions:
@@ -56,7 +56,7 @@ jobs:
         run: |
           aws s3 ls
       # Upload a file to AWS s3
-#      - name: Copy jar to s3
-#        run: |
-#          aws s3 cp ./build/libs/*.jar s3://${{ env.BUCKET_NAME }}/
+      - name: Copy jar to s3
+        run: |
+          aws s3 cp ./build/libs/*.jar s3://${{ env.BUCKET_NAME }}/
 #TEST
