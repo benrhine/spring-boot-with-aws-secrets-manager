@@ -64,4 +64,4 @@ jobs:
           aws s3 cp build/libs/spring-boot-with-aws-secrets-manager-0.0.1-SNAPSHOT.jar s3://brr-tools-test
 
         #s3://${{ env.BUCKET_NAME }}/
-
+#TEST
