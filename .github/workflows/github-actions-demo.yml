@@ -60,3 +60,4 @@ jobs:
 #        run: |
 #          aws s3 cp ./build/libs/*.jar s3://${{ env.BUCKET_NAME }}/
 #TEST
+# test
