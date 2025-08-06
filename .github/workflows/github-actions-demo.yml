@@ -55,10 +55,13 @@ jobs:
       - name: List S3 Buckets
         run: |
           aws s3 ls
+      - name: List Build files
+        run: |
+          ls -alh build
       # Upload a file to AWS s3
       - name: Copy jar to s3
         run: |
-          aws s3 cp ./build/libs/*.jar s3://brr-tools-test
+          aws s3 cp build/libs/*.jar s3://brr-tools-test
 
         #s3://${{ env.BUCKET_NAME }}/
 #TEST
