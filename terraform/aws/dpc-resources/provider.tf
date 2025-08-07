@@ -2,7 +2,7 @@
 provider "aws" {
   alias   = "brr-tools"
   region  = "us-east-2"
-  profile = "default"
+  profile = "brr-tools-admin"
 }
 
 provider "aws" {
