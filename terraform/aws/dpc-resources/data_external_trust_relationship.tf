@@ -5,7 +5,7 @@
 # location
 data "aws_iam_policy_document" "external_role_trust_relationship" {
   statement {
-    actions   = [
+    actions = [
       "sts:AssumeRole"
     ]
     principals {

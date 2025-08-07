@@ -15,16 +15,16 @@ module "iam_external_non_prod_policies" {
   providers = {
     aws = aws.brr-np
   }
-  source                        = "../modules/iam-policies"                                # Where to find the module
+  source = "../modules/iam-policies" # Where to find the module
   ######################################################################################################################
-  for_each = { for inst in local.external_np_policies : inst.name => inst }
-  policy_name                 = each.value.name
-  policy_description          = each.value.description
-  policy                      = each.value.policy
-  policy_role                 = each.value.role
-  policy_tags_environment     = var.tag_environment_non_prod
-  policy_tags_origination     = var.tag_origination_repo
-  policy_tags_project         = var.project_name
+  for_each                = { for inst in local.external_np_policies : inst.name => inst }
+  policy_name             = each.value.name
+  policy_description      = each.value.description
+  policy                  = each.value.policy
+  policy_role             = each.value.role
+  policy_tags_environment = var.tag_environment_non_prod
+  policy_tags_origination = var.tag_origination_repo
+  policy_tags_project     = var.project_name
 
   depends_on = [
     module.external_non_prod_service_role

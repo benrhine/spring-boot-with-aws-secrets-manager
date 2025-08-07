@@ -167,16 +167,16 @@ module "iam_policies" {
   providers = {
     aws = aws.brr-tools
   }
-  source                        = "../modules/iam-policies"                                # Where to find the module
+  source = "../modules/iam-policies" # Where to find the module
   ######################################################################################################################
-  for_each = { for inst in local.policies : inst.name => inst }
-  policy_name                 = each.value.name
-  policy_description          = each.value.description
-  policy                      = each.value.policy
-  policy_role                 = each.value.role
-  policy_tags_environment     = var.tag_environment_tools
-  policy_tags_origination     = var.tag_origination_repo
-  policy_tags_project         = var.project_name
+  for_each                = { for inst in local.policies : inst.name => inst }
+  policy_name             = each.value.name
+  policy_description      = each.value.description
+  policy                  = each.value.policy
+  policy_role             = each.value.role
+  policy_tags_environment = var.tag_environment_tools
+  policy_tags_origination = var.tag_origination_repo
+  policy_tags_project     = var.project_name
 
   depends_on = [
     module.base_assumed_service_role,
