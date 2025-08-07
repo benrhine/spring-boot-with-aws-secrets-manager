@@ -19,10 +19,10 @@ terraform {
   }
   required_version = "~> 1.2"
 
-  backend "s3" {
-    bucket  = "brr-tools-test"
-    key     = "dpc-base-cloud-resources/account-tools/terraform.tfstate"
-    region  = "us-east-2"
-    encrypt = true
-  }
+  # backend "s3" {
+  #   bucket  = "ids-dpc-terraform-state""
+  #   key     = "dpc-base-cloud-resources/account-tools/terraform.tfstate"
+  #   region  = "us-east-2"
+  #   encrypt = true
+  # }
 }
