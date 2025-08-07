@@ -179,12 +179,7 @@ module "iam_policies" {
   policy_tags_project     = var.project_name
 
   depends_on = [
-    module.base_assumed_service_role,
-    # module.base_service_role,
-    # module.codebuild_service_role,
-    # module.codepipeline_service_role,
-    # module.codepipeline_event_rule_role,
-    # module.external_non_prod_service_role
+    module.base_assumed_service_role
   ]
 }
 
