@@ -1,14 +1,14 @@
 # What cloud platform are you using and what is the default region
-provider "aws" {
-  alias   = "brr-tools"
-  region  = "us-east-2"
-  profile = "brr-tools-admin"
-}
+# provider "aws" {
+#   alias   = "brr-tools"
+#   region  = "us-east-2"
+#   profile = "brr-tools-admin"
+# }
 
 provider "aws" {
   alias   = "brr-np"
   region  = "us-east-2"
-  profile = "brr-np-admin"
+  # profile = "brr-np-admin"
 }
 
 # TODO
