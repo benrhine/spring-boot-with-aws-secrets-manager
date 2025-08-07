@@ -1,6 +1,6 @@
 data "aws_iam_policy_document" "tf_external_resource_policy" {
   statement {
-    actions   = [
+    actions = [
       "acm:DescribeCertificate",
       "acm:DeleteCertificate",
       "acm:ListCertificates",

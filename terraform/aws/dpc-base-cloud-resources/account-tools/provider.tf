@@ -6,8 +6,8 @@
 # }
 
 provider "aws" {
-  alias   = "brr-np"
-  region  = "us-east-2"
+  alias  = "brr-np"
+  region = "us-east-2"
   # profile = "brr-np-admin"
 }
 

@@ -5,7 +5,7 @@
 ########################################################################################################################
 data "aws_iam_policy_document" "tf_account_resources_iam_all" {
   statement {
-    actions   = [
+    actions = [
       "iam:AttachRolePolicy",
       "iam:CreateRole",
       "iam:GetRole",
@@ -16,13 +16,13 @@ data "aws_iam_policy_document" "tf_account_resources_iam_all" {
       "iam:PutRolePolicy"
     ]
     resources = ["*"]
-    effect = "Allow"
+    effect    = "Allow"
   }
 }
 
 data "aws_iam_policy_document" "tf_account_resources_iam" {
   statement {
-    actions   = [
+    actions = [
       "iam:AttachRolePolicy",
       "iam:CreateRole",
       "iam:GetRole",
@@ -33,25 +33,25 @@ data "aws_iam_policy_document" "tf_account_resources_iam" {
       "iam:PutRolePolicy"
     ]
     resources = ["arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/*"]
-    effect = "Allow"
+    effect    = "Allow"
   }
 }
 
 data "aws_iam_policy_document" "tf_account_resources_codebuild_resource_simple" { // this one
   statement {
-    actions   = [
+    actions = [
       "codebuild:CreateProject",
       "codebuild:UpdateProject",
       "codebuild:DeleteProject"
     ]
     resources = ["*"]
-    effect = "Allow"
+    effect    = "Allow"
   }
 }
 
 data "aws_iam_policy_document" "tf_account_resources_codepipeline" {
   statement {
-    actions   = [
+    actions = [
       "codepipeline:GetPipeline",
       "codepipeline:CreatePipeline",
       "codepipeline:UpdatePipeline",
@@ -59,7 +59,7 @@ data "aws_iam_policy_document" "tf_account_resources_codepipeline" {
       "codepipeline:GetPipelineState"
     ]
     resources = ["*"]
-    effect = "Allow"
+    effect    = "Allow"
   }
 }
 
@@ -69,12 +69,12 @@ data "aws_iam_policy_document" "tf_account_resources_codepipeline" {
 
 data "aws_iam_policy_document" "tf_account_resources_assume_role" {
   statement {
-    actions   = [
+    actions = [
       "sts:AssumeRole"
     ]
     #     resources = [var.policy_resource_arn]
     resources = [module.base_assumed_service_role.created_role_arn]
-    effect = "Allow"
+    effect    = "Allow"
   }
 }
 
@@ -90,7 +90,7 @@ data "aws_iam_policy_document" "tf_account_resources_assume_role" {
 # sls-domain-codebuild-build-deploy-resources-service-role
 data "aws_iam_policy_document" "tf_account_resources_log" {
   statement {
-    actions   = [
+    actions = [
       "logs:CreateLogGroup",
       "logs:CreateLogStream",
       "logs:PutLogEvents",
@@ -100,7 +100,7 @@ data "aws_iam_policy_document" "tf_account_resources_log" {
       "logs:DeleteQueryDefinition"
     ]
     resources = ["arn:aws:logs:*:*:*"]
-    effect = "Allow"  # note that these rights are given in the default policy and are required if you want logs out of your lambda(s)
+    effect    = "Allow" # note that these rights are given in the default policy and are required if you want logs out of your lambda(s)
   }
 }
 
@@ -122,7 +122,7 @@ data "aws_iam_policy_document" "tf_account_resources_log" {
 # sls-domain-codebuild-build-deploy-resources-service-role
 data "aws_iam_policy_document" "tf_account_resources_log_group_build" {
   statement {
-    actions   = [
+    actions = [
       "logs:CreateLogGroup",
       "logs:CreateLogStream",
       "logs:PutLogEvents",
@@ -134,7 +134,7 @@ data "aws_iam_policy_document" "tf_account_resources_log_group_build" {
       "arn:aws:logs:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:log-group:/aws/codebuild/sls-*",
       "arn:aws:logs:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:log-group:/aws/codebuild/step-*"
     ]
-    effect = "Allow"  # note that these rights are given in the default policy and are required if you want logs out of your lambda(s)
+    effect = "Allow" # note that these rights are given in the default policy and are required if you want logs out of your lambda(s)
   }
 }
 
@@ -171,7 +171,7 @@ data "aws_iam_policy_document" "tf_account_resources_log_group_build" {
 
 data "aws_iam_policy_document" "tf_account_resources_s3" {
   statement {
-    actions   = [
+    actions = [
       "s3:*"
       # "s3:PutObject",
       # "s3:GetObject",
@@ -181,7 +181,7 @@ data "aws_iam_policy_document" "tf_account_resources_s3" {
       # "s3:PutAccelerateConfiguration"
     ]
     resources = ["*"]
-    effect = "Allow"
+    effect    = "Allow"
   }
 }
 
@@ -202,12 +202,12 @@ data "aws_iam_policy_document" "tf_account_resources_s3" {
 
 data "aws_iam_policy_document" "tf_account_resources_codecommit_repo" {
   statement {
-    actions   = [
+    actions = [
       "codecommit:GitPull",
       "codecommit:GitPush"
     ]
     resources = ["*"]
-    effect = "Allow"
+    effect    = "Allow"
   }
 }
 
@@ -224,7 +224,7 @@ data "aws_iam_policy_document" "tf_account_resources_codecommit_repo" {
 
 data "aws_iam_policy_document" "tf_account_resources_codebuild" {
   statement {
-    actions   = [
+    actions = [
       "codebuild:CreateReportGroup",
       "codebuild:CreateReport",
       "codebuild:UpdateReport",
@@ -235,7 +235,7 @@ data "aws_iam_policy_document" "tf_account_resources_codebuild" {
       "codebuild:RetryBuild"
     ]
     resources = ["*"]
-    effect = "Allow"
+    effect    = "Allow"
   }
 }
 #        - PolicyName: cf-codebuild-resource-policy
@@ -257,13 +257,13 @@ data "aws_iam_policy_document" "tf_account_resources_codebuild" {
 
 data "aws_iam_policy_document" "tf_account_resources_codepipeline_simple" {
   statement {
-    actions   = [
+    actions = [
       "codepipeline:GetPipelineExecution",
       "codepipeline:StopPipelineExecution",
       "codepipeline:ListPipelineExecutions"
     ]
     resources = ["*"]
-    effect = "Allow"
+    effect    = "Allow"
   }
 }
 #        - PolicyName: !Sub ${ProjectName}-codepipeline-policy
@@ -280,11 +280,11 @@ data "aws_iam_policy_document" "tf_account_resources_codepipeline_simple" {
 
 data "aws_iam_policy_document" "tf_account_resources_iam_pass_through" {
   statement {
-    actions   = [
+    actions = [
       "iam:PassRole"
     ]
     resources = ["*"]
-    effect = "Allow"
+    effect    = "Allow"
   }
 }
 #        - PolicyName: cf-resource-iam-policy
@@ -299,30 +299,30 @@ data "aws_iam_policy_document" "tf_account_resources_iam_pass_through" {
 
 data "aws_iam_policy_document" "tf_account_resources_ssm_get" {
   statement {
-    actions   = [
+    actions = [
       "ssm:GetParameter",
       "ssm:GetParameters"
     ]
     resources = ["*"]
-    effect = "Allow"
+    effect    = "Allow"
   }
 }
 
 data "aws_iam_policy_document" "tf_account_resources_ssm" {
   statement {
-    actions   = [
+    actions = [
       "ssm:PutParameter",
       "ssm:DeleteParameter"
     ]
     resources = ["arn:aws:ssm:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:parameter/${var.framework_prefix}.brr.*"]
-    effect = "Allow"
+    effect    = "Allow"
   }
 }
 
 # Not sure why but Terraform wanted additional permissions that are not required by CF or SLS in order to deploy parameters
 data "aws_iam_policy_document" "tf_account_resources_ssm_all" {
   statement {
-    actions   = [
+    actions = [
       "ssm:GetParameter",
       "ssm:GetParameters",
       "ssm:PutParameter",
@@ -349,7 +349,7 @@ data "aws_iam_policy_document" "tf_account_resources_ssm_all" {
 
 data "aws_iam_policy_document" "tf_account_resources_everything" {
   statement {
-    actions   = [
+    actions = [
       "codepipeline:GetPipeline",
       "codepipeline:GetPipelineExecution",
       "codepipeline:StopPipelineExecution",
@@ -378,7 +378,7 @@ data "aws_iam_policy_document" "tf_account_resources_everything" {
       "kms:Decrypt"
     ]
     resources = ["*"]
-    effect = "Allow"
+    effect    = "Allow"
   }
 }
 
@@ -442,7 +442,7 @@ data "aws_iam_policy_document" "tf_account_resources_everything" {
 
 data "aws_iam_policy_document" "tf_account_resources_s3_restricted" {
   statement {
-    actions   = [
+    actions = [
       "s3:PutObject",
       "s3:GetObject",
       "s3:GetBucketPolicy",
@@ -484,12 +484,12 @@ data "aws_iam_policy_document" "tf_account_resources_s3_restricted" {
 
 data "aws_iam_policy_document" "tf_account_resources_code_connections" {
   statement {
-    actions   = [
+    actions = [
       "codeconnections:GetConnectionToken",
       "codeconnections:GetConnection"
     ]
     resources = ["arn:aws:codeconnections:${data.aws_region.current.name}:${var.account_tools}:connection/568df767-2b69-4f6e-8005-95968e568aaa"]
-    effect = "Allow"
+    effect    = "Allow"
   }
 }
 
@@ -506,11 +506,11 @@ data "aws_iam_policy_document" "tf_account_resources_code_connections" {
 
 data "aws_iam_policy_document" "tf_account_resources_cloudformation" {
   statement {
-    actions   = [
+    actions = [
       "cloudformation:*"
     ]
     resources = ["*"]
-    effect = "Allow"
+    effect    = "Allow"
   }
 }
 
