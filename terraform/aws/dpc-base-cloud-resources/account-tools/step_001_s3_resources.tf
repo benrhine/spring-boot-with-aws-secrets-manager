@@ -15,7 +15,7 @@ module "s3" {
   #   aws_account                   = data.aws_caller_identity.current.account_id             # Value retrieved in data.tf
   #   project_name                  = var.project_name                                        # Value passed in via variables.tf
   # Custom defined value
-  create_bucket_name  = "ids-dpc-terraform-state"
+  create_bucket_name  = "brr-test-2"
   s3_tags_environment = var.tag_environment_tools # Value passed in via variables.tf
   s3_tags_origination = var.tag_origination_repo
   s3_tags_project     = var.project_name
