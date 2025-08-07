@@ -24,7 +24,7 @@ name: AWS example workflow
 on:
   push
 env:
-  $BUCKET_TF_STATE : "brr-tools-test"
+  BUCKET_TF_STATE : "brr-tools-test"
   AWS_REGION : "us-east-2"
 # permission can be added at job level or workflow level
 permissions:
