@@ -10,7 +10,7 @@ data "aws_region" "current" {}
 
 data "aws_iam_policy_document" "tf_account_resources_s3" {
   statement {
-    actions   = [
+    actions = [
       "s3:*"
       # "s3:PutObject",
       # "s3:GetObject",
@@ -20,13 +20,13 @@ data "aws_iam_policy_document" "tf_account_resources_s3" {
       # "s3:PutAccelerateConfiguration"
     ]
     resources = ["*"]
-    effect = "Allow"
+    effect    = "Allow"
   }
 }
 
 data "aws_iam_policy_document" "tf_account_resources_iam_all" {
   statement {
-    actions   = [
+    actions = [
       "iam:AttachRolePolicy",
       "iam:CreateRole",
       "iam:GetRole",
@@ -37,6 +37,6 @@ data "aws_iam_policy_document" "tf_account_resources_iam_all" {
       "iam:PutRolePolicy"
     ]
     resources = ["*"]
-    effect = "Allow"
+    effect    = "Allow"
   }
 }

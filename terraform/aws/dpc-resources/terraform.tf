@@ -20,9 +20,9 @@ terraform {
   required_version = "~> 1.2"
 
   backend "s3" {
-    bucket                  = "brr-tools-test"
-    key                     = "dpc-resources/terraform.tfstate"
-    region                  = "us-east-2"
-    encrypt                 = true
+    bucket  = "brr-tools-test"
+    key     = "dpc-resources/terraform.tfstate"
+    region  = "us-east-2"
+    encrypt = true
   }
 }
