@@ -38,7 +38,7 @@ jobs:
       run:
         shell: bash
         # We keep Terraform files in the terraform directory.
-        working-directory: ./terraform/aws/dpc-resources
+        working-directory: ./terraform/aws/dpc-base-cloud-resources
 
     steps:
       - name: Git clone the repository

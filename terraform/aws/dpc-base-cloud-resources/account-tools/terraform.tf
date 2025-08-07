@@ -21,7 +21,7 @@ terraform {
 
   backend "s3" {
     bucket  = "brr-tools-test"
-    key     = "dpc-resources/terraform.tfstate"
+    key     = "dpc-base-cloud-resources/account-tools/terraform.tfstate"
     region  = "us-east-2"
     encrypt = true
   }

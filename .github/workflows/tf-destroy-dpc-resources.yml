@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
 #  push
 env:
-  BUCKET_TF_STATE : "brr-tools-test"
+  BUCKET_TF_STATE : "ids-dpc-terraform-state"
   AWS_REGION : "us-east-2"
 # permission can be added at job level or workflow level
 permissions:
@@ -19,7 +19,7 @@ jobs:
       run:
         shell: bash
         # We keep Terraform files in the terraform directory.
-        working-directory: ./terraform/aws/dpc-resources
+        working-directory: ./terraform/aws/dpc-base-cloud-resources/account-tools
 
     steps:
       - name: Git clone the repository
