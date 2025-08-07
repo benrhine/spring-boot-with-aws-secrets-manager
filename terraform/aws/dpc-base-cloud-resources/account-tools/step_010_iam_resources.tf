@@ -24,81 +24,81 @@ module "base_assumed_service_role" {
 # Which makes this the same as ...
 # -
 # - cf-base-${AWS::Region}-service-role
-module "base_service_role" {
-  # providers = {
-  #   aws = aws.brr-tools
-  # }
-  source = "../../modules/iam-roles" # Where to find the module
-  ######################################################################################################################   # Value passed in via variables.tf
-  iam_role_name          = "${var.framework_prefix}_base_service_role"
-  iam_role_description   = "This is the base role that will be used to deploy resources"
-  iam_assume_role_policy = data.aws_iam_policy_document.base_role_trust_relationship.json
-  iam_tags_environment   = var.tag_environment_tools
-  iam_tags_origination   = var.tag_origination_repo
-  iam_tags_project       = var.project_name
-
-  depends_on = [
-    module.base_assumed_service_role
-  ]
-}
+# module "base_service_role" {
+#   # providers = {
+#   #   aws = aws.brr-tools
+#   # }
+#   source = "../../modules/iam-roles" # Where to find the module
+#   ######################################################################################################################   # Value passed in via variables.tf
+#   iam_role_name          = "${var.framework_prefix}_base_service_role"
+#   iam_role_description   = "This is the base role that will be used to deploy resources"
+#   iam_assume_role_policy = data.aws_iam_policy_document.base_role_trust_relationship.json
+#   iam_tags_environment   = var.tag_environment_tools
+#   iam_tags_origination   = var.tag_origination_repo
+#   iam_tags_project       = var.project_name
+#
+#   depends_on = [
+#     module.base_assumed_service_role
+#   ]
+# }
 
 # This role may be redundant and may operate the same as the base-service-role, I had the realization that the CloudFormation
 # for this project is incomplete and basically was a re-working of existing work but that the CF template for this project has not been
 # run... Meaning there were simplifications in that file that are not being used in the real world at this point and time.
 # - cb-domain-${AWS::Region}-resource-deploy-service-role
 # - sls-domain-codebuild-build-deploy-resources-service-role
-module "codebuild_service_role" {
-  # providers = {
-  #   aws = aws.brr-tools
-  # }
-  source = "../../modules/iam-roles" # Where to find the module
-  ######################################################################################################################   # Value passed in via variables.tf
-  iam_role_name          = "${var.framework_prefix}_cb_${var.project_name}_service_role"
-  iam_role_description   = "This is the base role that will be assumed"
-  iam_role_path          = "/service-role/"
-  iam_assume_role_policy = data.aws_iam_policy_document.codebuild_role_trust_relationship.json
-  iam_tags_environment   = var.tag_environment_tools
-  iam_tags_origination   = var.tag_origination_repo
-  iam_tags_project       = var.project_name
-
-  depends_on = [
-    module.base_assumed_service_role
-  ]
-}
+# module "codebuild_service_role" {
+#   # providers = {
+#   #   aws = aws.brr-tools
+#   # }
+#   source = "../../modules/iam-roles" # Where to find the module
+#   ######################################################################################################################   # Value passed in via variables.tf
+#   iam_role_name          = "${var.framework_prefix}_cb_${var.project_name}_service_role"
+#   iam_role_description   = "This is the base role that will be assumed"
+#   iam_role_path          = "/service-role/"
+#   iam_assume_role_policy = data.aws_iam_policy_document.codebuild_role_trust_relationship.json
+#   iam_tags_environment   = var.tag_environment_tools
+#   iam_tags_origination   = var.tag_origination_repo
+#   iam_tags_project       = var.project_name
+#
+#   depends_on = [
+#     module.base_assumed_service_role
+#   ]
+# }
 
 # - ${ProjectName}-${AWS::Region}-codepipeline-role
-module "codepipeline_service_role" {
-  # providers = {
-  #   aws = aws.brr-tools
-  # }
-  source = "../../modules/iam-roles" # Where to find the module
-  ######################################################################################################################   # Value passed in via variables.tf
-  iam_role_name          = "${var.framework_prefix}_cp_${var.project_name}_service_role"
-  iam_role_description   = "This is the base role that will be assumed"
-  iam_role_path          = "/service-role/"
-  iam_assume_role_policy = data.aws_iam_policy_document.codepipeline_role_trust_relationship.json
-  iam_tags_environment   = var.tag_environment_tools
-  iam_tags_origination   = var.tag_origination_repo
-  iam_tags_project       = var.project_name
-
-  depends_on = [
-    module.base_assumed_service_role
-  ]
-}
-
-module "codepipeline_event_rule_role" {
-  # providers = {
-  #   aws = aws.brr-tools
-  # }
-  source = "../../modules/iam-roles" # Where to find the module
-  ######################################################################################################################   # Value passed in via variables.tf
-  iam_role_name          = "${var.framework_prefix}_cp_er_${var.project_name}_service_role"
-  iam_role_description   = "This role allows for the CodePipeline to execute"
-  iam_assume_role_policy = data.aws_iam_policy_document.codepipeline_event_rule_role_trust_relationship.json
-  iam_tags_environment   = var.tag_environment_tools
-  iam_tags_origination   = var.tag_origination_repo
-  iam_tags_project       = var.project_name
-}
+# module "codepipeline_service_role" {
+#   # providers = {
+#   #   aws = aws.brr-tools
+#   # }
+#   source = "../../modules/iam-roles" # Where to find the module
+#   ######################################################################################################################   # Value passed in via variables.tf
+#   iam_role_name          = "${var.framework_prefix}_cp_${var.project_name}_service_role"
+#   iam_role_description   = "This is the base role that will be assumed"
+#   iam_role_path          = "/service-role/"
+#   iam_assume_role_policy = data.aws_iam_policy_document.codepipeline_role_trust_relationship.json
+#   iam_tags_environment   = var.tag_environment_tools
+#   iam_tags_origination   = var.tag_origination_repo
+#   iam_tags_project       = var.project_name
+#
+#   depends_on = [
+#     module.base_assumed_service_role
+#   ]
+# }
+#
+# module "codepipeline_event_rule_role" {
+#   # providers = {
+#   #   aws = aws.brr-tools
+#   # }
+#   source = "../../modules/iam-roles" # Where to find the module
+#   ######################################################################################################################   # Value passed in via variables.tf
+#   iam_role_name          = "${var.framework_prefix}_cp_er_${var.project_name}_service_role"
+#   iam_role_description   = "This role allows for the CodePipeline to execute"
+#   iam_assume_role_policy = data.aws_iam_policy_document.codepipeline_event_rule_role_trust_relationship.json
+#   iam_tags_environment   = var.tag_environment_tools
+#   iam_tags_origination   = var.tag_origination_repo
+#   iam_tags_project       = var.project_name
+# }
 
 
 # SERVERLESS FRAMEWORK EXAMPLE OF THIS MODULE
