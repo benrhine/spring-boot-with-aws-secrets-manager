@@ -50,7 +50,7 @@ jobs:
           role-session-name: samplerolesession
           aws-region: ${{ env.AWS_REGION }}
       - name: Get System Parameters
-        uses: aws-actions/aws-ssm-parameters-action@v1
+        uses: eliasjcjunior/aws-ssm-parameters-action@1.2.2
         with:
           path: |
             BUCKET_TF_STATE,tf.brr.tools.tfstate.bucket.name
