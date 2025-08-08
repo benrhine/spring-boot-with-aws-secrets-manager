@@ -24,7 +24,7 @@ name: Apply DCP Resources
 on:
   push
 env:
-  BUCKET_TF_STATE : "ids-dpc-terraform-state"
+#  BUCKET_TF_STATE : "ids-dpc-terraform-state"
   AWS_REGION : "us-east-2"
 # permission can be added at job level or workflow level
 permissions:
@@ -49,6 +49,11 @@ jobs:
           role-to-assume: arn:aws:iam::792981815698:role/github_oidc_assume_role
           role-session-name: samplerolesession
           aws-region: ${{ env.AWS_REGION }}
+      - name: Get secrets by name and by ARN
+        uses: aws-actions/aws-secretsmanager-get-secrets@v2
+        with:
+          secret-ids: |
+            BUCKET_TF_STATE,tf.brr.tools.tfstate.bucket.name
       - name: Setup Terraform with specified version on the runner
         uses: hashicorp/setup-terraform@v2
         with:
