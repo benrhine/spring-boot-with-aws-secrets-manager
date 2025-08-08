@@ -56,7 +56,7 @@ jobs:
             /tf_brr_tools_tfstate_bucket_name
       - name: log envs
         env:
-          secret_name: ${{ env.TF_BRR_TOOLS_TFSTATE_BUCKET_NAME }}
+          secret_name: ${{ env.tf_brr_tools_tfstate_bucket_name }}
         run: |
           echo $secret_name
 #      - name: Get
