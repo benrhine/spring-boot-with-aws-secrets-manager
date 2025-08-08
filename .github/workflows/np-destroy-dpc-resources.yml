@@ -1,4 +1,4 @@
-name: Destroy DPC Resources
+name: NP Destroy DPC Resources
 on:
   # https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows#workflow_dispatch
   # https://docs.github.com/en/actions/how-tos/manage-workflow-runs/manually-run-a-workflow
