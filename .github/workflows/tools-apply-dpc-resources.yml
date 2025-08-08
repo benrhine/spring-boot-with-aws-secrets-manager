@@ -54,6 +54,11 @@ jobs:
         with:
           paths: |
             /tf.brr.tools.tfstate.bucket.name
+      - name: log envs
+        env:
+          secret_name: ${{ env.TF_BRR_TOOLS_TFSTATE_BUCKET_NAME }}
+        run: |
+          echo $secret_name
 #      - name: Get
 #          uses: aws-actions/aws-ssm-parameters-action@v1
 #          with:
