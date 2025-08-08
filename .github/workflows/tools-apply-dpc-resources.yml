@@ -49,11 +49,22 @@ jobs:
           role-to-assume: arn:aws:iam::792981815698:role/github_oidc_assume_role
           role-session-name: samplerolesession
           aws-region: ${{ env.AWS_REGION }}
-      - name: Get secrets by name and by ARN
-        uses: aws-actions/aws-secretsmanager-get-secrets@v2
+      - name: Get System Parameters
+        uses: aws-actions/aws-ssm-parameters-action@v1
         with:
-          secret-ids: |
+          path: |
             BUCKET_TF_STATE,tf.brr.tools.tfstate.bucket.name
+#      - name: Get
+#          uses: aws-actions/aws-ssm-parameters-action@v1
+#          with:
+#            path: /your/ssm/path # Replace with the path to your SSM parameters
+#            with-decryption: true # Set to true if parameters are encrypted
+#            split-env: true
+#      - name: Get secrets by name and by ARN
+#        uses: aws-actions/aws-secretsmanager-get-secrets@v2
+#        with:
+#          secret-ids: |
+#            BUCKET_TF_STATE,tf.brr.tools.tfstate.bucket.name
       - name: Setup Terraform with specified version on the runner
         uses: hashicorp/setup-terraform@v2
         with:
