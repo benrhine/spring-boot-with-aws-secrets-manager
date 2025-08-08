@@ -53,7 +53,7 @@ jobs:
         uses: eliasjcjunior/aws-ssm-parameters-action@1.2.2
         with:
           paths: |
-            /parameter/tf.brr.tools.tfstate.bucket.name
+            arn:aws:ssm:us-east-2:792981815698:parameter/tf.brr.tools.tfstate.bucket.name
       - name: log envs
         env:
           secret_name: ${{ env.TF_BRR_TOOLS_TFSTATE_BUCKET_NAME }}
