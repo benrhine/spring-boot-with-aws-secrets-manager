@@ -43,19 +43,21 @@ jobs:
     steps:
       - name: Git clone the repository
         uses: actions/checkout@v4
+        # https://github.com/aws-actions/configure-aws-credentials?tab=readme-ov-file
       - name: configure aws credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: arn:aws:iam::792981815698:role/github_oidc_assume_role
           role-session-name: samplerolesession
           aws-region: ${{ env.AWS_REGION }}
-          role-duration-seconds: 300 # 5 mins
+          role-duration-seconds: 900 # 5 mins
       # https://github.com/marketplace/actions/aws-ssm-build-secrets-for-github-actions
       - uses: "marvinpinto/action-inject-ssm-secrets@latest"
         with:
           ssm_parameter: "/tf.brr.tool.tfstate.bucket.name"
           env_variable_name: "TF_BRR_TOOLS_TFSTATE_BUCKET_NAME"
-      # This one does not seem to work
+      # This one does not seem to work'
+      #https://github.com/marketplace/actions/aws-ssm-parameters-action
 #      - name: Get System Parameters
 #        uses: eliasjcjunior/aws-ssm-parameters-action@1.2.2
 #        with:
