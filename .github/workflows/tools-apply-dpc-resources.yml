@@ -52,7 +52,7 @@ jobs:
       - name: Get System Parameters
         uses: eliasjcjunior/aws-ssm-parameters-action@1.2.2
         with:
-          path: |
+          paths: |
             BUCKET_TF_STATE,tf.brr.tools.tfstate.bucket.name
 #      - name: Get
 #          uses: aws-actions/aws-ssm-parameters-action@v1
