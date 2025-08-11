@@ -20,7 +20,7 @@
 
 # Sample workflow to access AWS resources when workflow is tied to branch
 # The workflow Creates static website using aws s3
-name: Tools-Apply-DCP-Resources
+name: tools-apply-dpc-resources
 on:
   push
 env:
@@ -39,16 +39,8 @@ jobs:
         shell: bash
         # We keep Terraform files in the terraform directory.
         working-directory: ./terraform/aws/dpc-base-cloud-resources/account-tools
-#test
+
     steps:
-#      - name: Get Random Number
-#        id: random-number-action
-#        uses: yakubique/random-number@v1.1
-#        with:
-#          min: '1'
-#          max: '100'
-#      - name: Display Random Number
-#        run: echo "The random number generated is ${{ steps.random-number-action.outputs.number }}"
       - name: Git clone the repository
         uses: actions/checkout@v4
         # https://github.com/aws-actions/configure-aws-credentials?tab=readme-ov-file
@@ -60,42 +52,23 @@ jobs:
           aws-region: ${{ env.AWS_REGION }}
           role-duration-seconds: 900 # 15 mins - this is the minimum allowable duration
       # https://github.com/marketplace/actions/aws-ssm-build-secrets-for-github-actions
-      - uses: "marvinpinto/action-inject-ssm-secrets@latest"
+      - name: Retrieve SSM Parameter and set as env var
+        uses: "marvinpinto/action-inject-ssm-secrets@latest"
         with:
           ssm_parameter: "/tf_brr_tools_tfstate_bucket_name"
           env_variable_name: "TF_BRR_TOOLS_TFSTATE_BUCKET_NAME"
-      # This one does not seem to work'
-      #https://github.com/marketplace/actions/aws-ssm-parameters-action
-#      - name: Get System Parameters
-#        uses: eliasjcjunior/aws-ssm-parameters-action@1.2.2
-#        with:
-#          paths: |
-#            /tf_brr_tools_tfstate_bucket_name
-      - name: log envs
-        env:
-          secret_name: ${{ env.TF_BRR_TOOLS_TFSTATE_BUCKET_NAME }}
-        run: |
-          echo $secret_name
-#      - name: Get
-#          uses: aws-actions/aws-ssm-parameters-action@v1
-#          with:
-#            path: /your/ssm/path # Replace with the path to your SSM parameters
-#            with-decryption: true # Set to true if parameters are encrypted
-#            split-env: true
-#      - name: Get secrets by name and by ARN
-#        uses: aws-actions/aws-secretsmanager-get-secrets@v2
-#        with:
-#          secret-ids: |
-#            BUCKET_TF_STATE,tf.brr.tools.tfstate.bucket.name
+#      - name: Debug - Log env vars
+#        env:
+#          secret_name: ${{ env.TF_BRR_TOOLS_TFSTATE_BUCKET_NAME }}
+#        run: |
+#          echo $secret_name
+#      - name: Debug - Check filesystem location
+#        id: ls
+#        run: ls -alh
       - name: Setup Terraform with specified version on the runner
         uses: hashicorp/setup-terraform@v2
         with:
           terraform_version: 1.12.2
-
-      - name: check where i am
-        id: ls
-        run: ls -alh
-
       - name: Terraform init
         id: init
         run: terraform init -backend-config="bucket=$TF_BRR_TOOLS_TFSTATE_BUCKET_NAME"

@@ -20,7 +20,7 @@
 
 # Sample workflow to access AWS resources when workflow is tied to branch
 # The workflow Creates static website using aws s3
-name: Prod Apply DCP Resources
+name: prod-apply-dpc-resources
 on:
   workflow_dispatch:
 env:
@@ -47,7 +47,7 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ secrets.TOOLS_ROLE }}
-          role-session-name: samplerolesession
+          role-session-name: "${{ github.workflow }}-${{ github.run_id }}-${{ github.run_attempt }}"
           aws-region: ${{ env.AWS_REGION }}
           role-duration-seconds: 900 # 15 mins - this is the minimum allowable duration
       - name: Setup Terraform with specified version on the runner
