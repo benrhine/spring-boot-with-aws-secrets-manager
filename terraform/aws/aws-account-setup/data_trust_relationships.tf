@@ -1,4 +1,4 @@
-data "aws_iam_policy_document" "github_oidc_assume_role" {
+data "aws_iam_policy_document" "tools_github_oidc_assume_role" {
   statement {
     effect = "Allow"
     actions = [
@@ -7,7 +7,39 @@ data "aws_iam_policy_document" "github_oidc_assume_role" {
     principals {
       # Note that in CF and SLS i have this set to the PROD account not non-prod
       # identifiers = ["arn:aws:iam::${data.aws_caller_identity.current.account_id}:oidc-provider/token.actions.githubusercontent.com"]
-      identifiers = [aws_iam_openid_connect_provider.github.arn]
+      identifiers = [aws_iam_openid_connect_provider.tools_github.arn]
+      type        = "Federated"
+    }
+    condition {
+      test     = "StringEquals"
+      variable = "token.actions.githubusercontent.com:aud"
+      values   = ["sts.amazonaws.com"]
+    }
+    # this causes the job to fail
+    # condition {
+    #   test     = "StringEquals"
+    #   variable = "token.actions.githubusercontent.com:ref"
+    #   values   = ["refs/heads/main"]
+    # }
+
+    condition {
+      test     = "StringLike"
+      variable = "token.actions.githubusercontent.com:sub"
+      values   = ["repo:benrhine/spring-boot-with-aws-secrets-manager:ref:refs/heads/main"]
+    }
+  }
+}
+
+data "aws_iam_policy_document" "np_github_oidc_assume_role" {
+  statement {
+    effect = "Allow"
+    actions = [
+      "sts:AssumeRoleWithWebIdentity"
+    ]
+    principals {
+      # Note that in CF and SLS i have this set to the PROD account not non-prod
+      # identifiers = ["arn:aws:iam::${data.aws_caller_identity.current.account_id}:oidc-provider/token.actions.githubusercontent.com"]
+      identifiers = [aws_iam_openid_connect_provider.np_github.arn]
       type        = "Federated"
     }
     condition {

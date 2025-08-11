@@ -1,4 +1,4 @@
-resource "aws_iam_openid_connect_provider" "github" {
+resource "aws_iam_openid_connect_provider" "tools_github" {
   provider = aws.brr-tools
   url = "https://token.actions.githubusercontent.com"
 
@@ -9,7 +9,7 @@ resource "aws_iam_openid_connect_provider" "github" {
   thumbprint_list = ["6938fd4d98bab03faadb97b34396831e3780aea1", "1c58a3a8518e8759bf075b76b750d4f2df264fcd"]
 }
 
-resource "aws_iam_openid_connect_provider" "np-github" {
+resource "aws_iam_openid_connect_provider" "np_github" {
   provider = aws.brr-np
   url = "https://token.actions.githubusercontent.com"
 
@@ -40,7 +40,7 @@ module "aws_tools_github_oidc_assume_role" {
   ######################################################################################################################   # Value passed in via variables.tf
   iam_role_name          = "github_oidc_assume_role"
   iam_role_description   = "This is the base role that will be assumed"
-  iam_assume_role_policy = data.aws_iam_policy_document.github_oidc_assume_role.json
+  iam_assume_role_policy = data.aws_iam_policy_document.tools_github_oidc_assume_role.json
   iam_tags_environment   = var.tag_environment_tools
   iam_tags_origination   = var.tag_origination_repo
   iam_tags_project       = var.project_name
@@ -54,10 +54,10 @@ module "aws_np_github_oidc_assume_role" {
   ######################################################################################################################   # Value passed in via variables.tf
   iam_role_name          = "github_oidc_assume_role"
   iam_role_description   = "This is the base role that will be assumed"
-  iam_assume_role_policy = data.aws_iam_policy_document.github_oidc_assume_role.json
-  iam_tags_environment   = "test"
-  iam_tags_origination   = "test"
-  iam_tags_project       = "test"
+  iam_assume_role_policy = data.aws_iam_policy_document.np_github_oidc_assume_role.json
+  iam_tags_environment   = var.tag_environment_tools
+  iam_tags_origination   = var.tag_origination_repo
+  iam_tags_project       = var.project_name
 }
 
 resource "aws_iam_role_policy_attachment" "aws_tools_github_oidc_assume_role_attachment" {
