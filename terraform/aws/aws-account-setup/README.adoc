@@ -44,3 +44,11 @@ Terraform now supports version locking natively on S3. Meaning that the creation
 [NOTE]
 What is the purpose of state locking? State locking is to ensure that 2 people working on the same project at the same time do not corrupt the state or cause problems for one another.
 
+== Reference
+
+* https://www.youtube.com/watch?v=AmWnWfuSTfQ
+* https://rafaelmedeiros94.medium.com/goodbye-dynamodb-terraform-s3-backend-now-supports-native-locking-06f74037ad39
+* https://spacelift.io/blog/terraform-migrate-state
+* https://www.google.com/search?client=safari&rls=en&q=terraform+migrate+state+to+s3&ie=UTF-8&oe=UTF-8
+* https://medium.com/@deepeshjaiswal6734/setting-up-terraform-with-s3-backend-and-dynamodb-locking-1e4b69e0b3cd
+
