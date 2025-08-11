@@ -45,6 +45,8 @@ jobs:
         id: random-generator
         run: echo "random-number=$RANDOM" >> $GITHUB_OUTPUT
         shell: bash
+      - name: Use the random number
+        run: echo "The generated random number is ${{ steps.random-generator.outputs.random-number }}"
       - name: Git clone the repository
         uses: actions/checkout@v4
         # https://github.com/aws-actions/configure-aws-credentials?tab=readme-ov-file
