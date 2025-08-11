@@ -19,9 +19,9 @@
 # }
 
 module "base_assumed_service_role" {
-  # providers = {
-  #   aws = aws.brr-tools
-  # }
+  providers = {
+    aws = aws.brr-tools
+  }
   source = "../../modules/iam-roles" # Where to find the module
   ######################################################################################################################   # Value passed in via variables.tf
   iam_role_name          = "${var.framework_prefix}_base_assumed_service_role"
