@@ -21,6 +21,9 @@ resource "random_string" "suffix" {
 
 
 module "aws_tools_github_oidc_assume_role" {
+  providers = {
+    aws = aws.brr-tools
+  }
   source = "../modules/iam-roles" # Where to find the module
   ######################################################################################################################   # Value passed in via variables.tf
   iam_role_name          = "github_oidc_assume_role"
@@ -31,8 +34,33 @@ module "aws_tools_github_oidc_assume_role" {
   iam_tags_project       = var.project_name
 }
 
-resource "aws_iam_role_policy_attachment" "external_tools_service_role_attachment" {
+module "aws_np_github_oidc_assume_role" {
+  providers = {
+    aws = aws.brr-np
+  }
+  source = "../modules/iam-roles" # Where to find the module
+  ######################################################################################################################   # Value passed in via variables.tf
+  iam_role_name          = "github_oidc_assume_role"
+  iam_role_description   = "This is the base role that will be assumed"
+  iam_assume_role_policy = data.aws_iam_policy_document.github_oidc_assume_role.json
+  iam_tags_environment   = "test"
+  iam_tags_origination   = "test"
+  iam_tags_project       = "test"
+}
+
+resource "aws_iam_role_policy_attachment" "aws_tools_github_oidc_assume_role_attachment" {
+  provider   = aws.brr-tools
   role       = module.aws_tools_github_oidc_assume_role.created_role.name
+  policy_arn = "arn:aws:iam::aws:policy/AdministratorAccess"
+
+  depends_on = [
+    module.aws_tools_github_oidc_assume_role
+  ]
+}
+
+resource "aws_iam_role_policy_attachment" "aws_np_github_oidc_assume_role_attachment" {
+  provider   = aws.brr-np
+  role       = module.aws_np_github_oidc_assume_role.created_role.name
   policy_arn = "arn:aws:iam::aws:policy/AdministratorAccess"
 
   depends_on = [

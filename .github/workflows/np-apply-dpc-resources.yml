@@ -46,7 +46,7 @@ jobs:
       - name: configure aws credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: ${{ secrets.TOOLS_ROLE }}
+          role-to-assume: ${{ secrets.NP_ROLE }}
           role-session-name: "${{ github.workflow }}-${{ github.run_id }}-${{ github.run_attempt }}"
           aws-region: ${{ env.AWS_REGION }}
           role-duration-seconds: 900 # 15 mins - this is the minimum allowable duration
