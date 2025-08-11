@@ -56,7 +56,7 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ secrets.TOOLS_ROLE }}
-          role-session-name: "${{ github.jobs[github.job].name }}-${{ github.run_id }}-${{ github.run_attempt }}"
+          role-session-name: "${{ github.name }}-${{ github.run_id }}-${{ github.run_attempt }}"
           aws-region: ${{ env.AWS_REGION }}
           role-duration-seconds: 900 # 15 mins - this is the minimum allowable duration
       # https://github.com/marketplace/actions/aws-ssm-build-secrets-for-github-actions
