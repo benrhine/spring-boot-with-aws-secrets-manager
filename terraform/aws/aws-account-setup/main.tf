@@ -20,7 +20,7 @@ resource "aws_iam_openid_connect_provider" "np_github" {
   thumbprint_list = ["6938fd4d98bab03faadb97b34396831e3780aea1", "1c58a3a8518e8759bf075b76b750d4f2df264fcd"]
 }
 
-resource "random_string" "suffix" {
+resource "random_string" "tools_suffix" {
   length  = 8
   special = false
   upper   = false # Exclude uppercase characters
@@ -83,7 +83,7 @@ resource "aws_iam_role_policy_attachment" "aws_np_github_oidc_assume_role_attach
 module "s3_tf_state_bucket" {
   source = "../modules/s3" # Where to find the module
   ######################################################################################################################
-  create_bucket_name  = "${var.business_area_name}-${var.team_name}-${var.framework_prefix}-state-${random_string.suffix.result}"
+  create_bucket_name  = "${var.business_area_name}-${var.team_name}-${var.framework_prefix}-state-${random_string.tools_suffix.result}"
   s3_tags_environment = var.tag_environment_tools # Value passed in via variables.tf
   s3_tags_origination = var.tag_origination_repo
   s3_tags_project     = var.project_name
