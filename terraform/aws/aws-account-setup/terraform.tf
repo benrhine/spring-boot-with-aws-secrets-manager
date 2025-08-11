@@ -21,7 +21,7 @@ terraform {
 
   backend "s3" {
     bucket       = "idc-dpc-tf-state-zm4vqagm"
-    key          = "dpc-base-cloud-resources/account-tools/terraform.tfstate"
+    key          = "aws-account-setup/terraform.tfstate"
     region       = "us-east-2"
     encrypt      = true
     use_lockfile = true #S3 native locking

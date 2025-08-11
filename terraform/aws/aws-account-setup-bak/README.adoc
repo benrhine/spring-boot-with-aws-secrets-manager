@@ -1,0 +1,19 @@
+= Aws Account Setup
+
+This Terraform project is intended to be the very base account setup, and it will provide the following items ...
+
+* OIDC connection between GitHub and Aws
+* Creates a S3 bucket to hold the Terraform state
+* Creates a DynamoDB table to handle Terraform state locking
+* Creates a base role that will be used for GitHub actions
+* Creates a system property to hold S3 bucket name
+
+This project is critical to everything else in the account as it configures the minimum requirements for everything else to be able to action.
+
+
+A few important items to be aware of ...
+
+* This project state may not be versioned the same way as others as it is setting up the most basic parts of the account and resources created as part of this may need to be _imported_ into future Terraform projects in the event anything is to ever go wrong with the state of this project. This is also why this project is so minimal that *IF* the resources have to be manually cleaned up, it is not a major challenge.
+* S3 bucket name will include a random value to ensure uniqueness as S3 bucket names *MUST* be globally unique.
+* The random value generated *WILL NOT* change between Terraform runs (i.e. whatever the random values initial state is the value that will persist until `terraform destroy` is executed in the project)
+

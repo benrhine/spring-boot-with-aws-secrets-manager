@@ -17,13 +17,12 @@ terraform {
       version = "~> 5.42.0"
     }
   }
-  required_version = "~> 1.12.2"
+  required_version = "~> 1.2"
 
-  backend "s3" {
-    bucket       = "idc-dpc-tf-state-zm4vqagm"
-    key          = "dpc-base-cloud-resources/account-tools/terraform.tfstate"
-    region       = "us-east-2"
-    encrypt      = true
-    use_lockfile = true #S3 native locking
-  }
+  # backend "s3" {
+  #   bucket                  = "tf-cross-account-shared-services"
+  #   key                     = "account-resources/terraform.tfstate"
+  #   region                  = "us-west-2"
+  #   encrypt                 = true
+  # }
 }
