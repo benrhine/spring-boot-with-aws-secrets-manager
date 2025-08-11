@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
 #  push
 env:
-  BUCKET_TF_STATE : "ids-dpc-terraform-state"
+#  BUCKET_TF_STATE : "ids-dpc-terraform-state"
   AWS_REGION : "us-east-2"
 # permission can be added at job level or workflow level
 permissions:
@@ -27,13 +27,14 @@ jobs:
       - name: configure aws credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: arn:aws:iam::792981815698:role/github_oidc_assume_role
+          role-to-assume: ${{ secrets.TOOLS_ROLE }}
           role-session-name: samplerolesession
           aws-region: ${{ env.AWS_REGION }}
+          role-duration-seconds: 900 # 15 mins - this is the minimum allowable duration
       - name: Setup Terraform with specified version on the runner
         uses: hashicorp/setup-terraform@v2
         with:
-          terraform_version: 1.3.0
+          terraform_version: 1.12.2
 
       - name: check where i am
         id: ls
@@ -41,7 +42,7 @@ jobs:
 
       - name: Terraform init
         id: init
-        run: terraform init -backend-config="bucket=$BUCKET_TF_STATE"
+        run: terraform init -backend-config="bucket=$TF_BRR_TOOLS_TFSTATE_BUCKET_NAME"
 
       - name: Terraform plan --destroy
         id: plan

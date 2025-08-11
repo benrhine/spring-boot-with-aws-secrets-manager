@@ -41,6 +41,10 @@ jobs:
         working-directory: ./terraform/aws/dpc-base-cloud-resources/account-tools
 #test
     steps:
+      - name: Generate and output random number
+        id: random-generator
+        run: echo "random-number=$RANDOM" >> $GITHUB_OUTPUT
+        shell: bash
       - name: Git clone the repository
         uses: actions/checkout@v4
         # https://github.com/aws-actions/configure-aws-credentials?tab=readme-ov-file
@@ -48,7 +52,7 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ secrets.TOOLS_ROLE }}
-          role-session-name: samplerolesession
+          role-session-name: "tools-apply-${{ steps.random-generator.outputs.random-number }}"
           aws-region: ${{ env.AWS_REGION }}
           role-duration-seconds: 900 # 15 mins - this is the minimum allowable duration
       # https://github.com/marketplace/actions/aws-ssm-build-secrets-for-github-actions
