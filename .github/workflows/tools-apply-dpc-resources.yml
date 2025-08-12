@@ -57,14 +57,14 @@ jobs:
         with:
           ssm_parameter: "/tf_brr_tools_tfstate_bucket_name"
           env_variable_name: "TF_BRR_TOOLS_TFSTATE_BUCKET_NAME"
-#      - name: Debug - Log env vars
-#        env:
-#          secret_name: ${{ env.TF_BRR_TOOLS_TFSTATE_BUCKET_NAME }}
-#        run: |
-#          echo $secret_name
-#      - name: Debug - Check filesystem location
-#        id: ls
-#        run: ls -alh
+      - name: Debug - Log env vars
+        env:
+          secret_name: ${{ env.TF_BRR_TOOLS_TFSTATE_BUCKET_NAME }}
+        run: |
+          echo $secret_name
+      - name: Debug - Check filesystem location
+        id: ls
+        run: ls -alh
       - name: Setup Terraform with specified version on the runner
         uses: hashicorp/setup-terraform@v2
         with:

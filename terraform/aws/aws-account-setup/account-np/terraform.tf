@@ -19,10 +19,12 @@ terraform {
   }
   required_version = "~> 1.12.2"
 
+  # https://chatgpt.com/share/689b83b5-4c9c-8011-8008-6aa64a3a1e03
   backend "s3" {
-    bucket       = "idc-dpc-tf-state-zm4vqagm"
+    bucket       = "idc-dpc-tf-state-zjy5gcny"
     key          = "aws-account-setup/terraform.tfstate"
     region       = "us-east-2"
+    profile = "brr-np-admin"
     encrypt      = true
     use_lockfile = true #S3 native locking
   }
