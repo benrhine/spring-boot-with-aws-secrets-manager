@@ -22,7 +22,10 @@
 # The workflow Creates static website using aws s3
 name: tools-apply-dpc-resources
 on:
-  push
+  workflow_dispatch:
+  push:
+    branches:
+      - '**'  # triggers on push to any branch
 env:
 #  BUCKET_TF_STATE : "ids-dpc-terraform-state"
   AWS_REGION : "us-east-2"

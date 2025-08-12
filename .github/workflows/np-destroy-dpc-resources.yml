@@ -31,18 +31,27 @@ jobs:
           role-session-name: "${{ github.workflow }}-${{ github.run_id }}-${{ github.run_attempt }}"
           aws-region: ${{ env.AWS_REGION }}
           role-duration-seconds: 900 # 15 mins - this is the minimum allowable duration
+      - name: Retrieve SSM Parameter and set as env var
+        uses: "marvinpinto/action-inject-ssm-secrets@latest"
+        with:
+          ssm_parameter: "/tf_brr_tfstate_bucket_name"
+          env_variable_name: "TF_BRR_TFSTATE_BUCKET_NAME"
+      - name: Debug - Log env vars
+        env:
+          secret_name: ${{ env.TF_BRR_TFSTATE_BUCKET_NAME }}
+        run: |
+          echo $secret_name
+      - name: Debug - Check filesystem location
+        id: ls
+        run: ls -alh
       - name: Setup Terraform with specified version on the runner
         uses: hashicorp/setup-terraform@v2
         with:
           terraform_version: 1.12.2
 
-      - name: check where i am
-        id: ls
-        run: ls -alh
-
       - name: Terraform init
         id: init
-        run: terraform init -backend-config="bucket=$TF_BRR_TOOLS_TFSTATE_BUCKET_NAME"
+        run: terraform init -backend-config="bucket=$TF_BRR_TFSTATE_BUCKET_NAME"
 
       - name: Terraform plan --destroy
         id: plan
