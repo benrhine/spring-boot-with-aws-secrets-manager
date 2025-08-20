@@ -1,0 +1,5 @@
+= dpc-base-cloud-resources
+
+== Reference
+
+* https://stackoverflow.com/questions/67789507/generate-unique-string-in-github-actions

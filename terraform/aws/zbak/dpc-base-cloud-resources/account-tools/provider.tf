@@ -12,3 +12,7 @@ provider "aws" {
 # https://dev.to/sepiyush/using-terraform-to-manage-resources-in-multiple-aws-accounts-1b61
 # https://hector-reyesaleman.medium.com/terraform-aws-provider-everything-you-need-to-know-about-multi-account-authentication-and-f2343a4afd4b
 
+provider "github" {
+  owner = "benrhine"
+  token = var.github_pat_2025
+}

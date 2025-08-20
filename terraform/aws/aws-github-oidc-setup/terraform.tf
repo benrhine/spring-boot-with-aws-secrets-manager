@@ -1,12 +1,21 @@
+# Copyright (c) HashiCorp, Inc.
+# SPDX-License-Identifier: MPL-2.0
 
 terraform {
+
+  /* Uncomment this block to use Terraform Cloud for this tutorial
+  cloud {
+      organization = "organization-name"
+      workspaces {
+        name = "learn-terraform-variables"
+      }
+  }
+  */
   required_providers {
-    # Configures access to AWS
     aws = {
       source  = "hashicorp/aws"
       version = "~> 5.42.0"
     }
-    # Configures access to GitHub - ONLY REQUIRED to set GitHub Action secrets
     github = {
       source  = "integrations/github"
       version = "~> 5.0"
@@ -16,7 +25,7 @@ terraform {
 
   # backend "s3" {
   #   bucket       = "idc-dpc-tf-state-y1d2b2t7"
-  #   key          = "dpc-base-cloud-resources/terraform.tfstate"
+  #   key          = "aws-github-oidc-setup/terraform.tfstate"
   #   region       = "us-east-2"
   #   encrypt      = true
   #   use_lockfile = true #S3 native locking

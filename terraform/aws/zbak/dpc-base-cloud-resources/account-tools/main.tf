@@ -1,13 +1,3 @@
-resource "aws_iam_openid_connect_provider" "github" {
-  url = "https://token.actions.githubusercontent.com"
-
-  client_id_list = [
-    "sts.amazonaws.com",
-  ]
-  # GitHub OIDC root CA thumbprint - second value may be unnecessary
-  thumbprint_list = ["6938fd4d98bab03faadb97b34396831e3780aea1", "1c58a3a8518e8759bf075b76b750d4f2df264fcd"]
-}
-
 resource "random_string" "suffix" {
   length  = 8
   special = false
@@ -32,7 +22,6 @@ module "github_oidc_assume_role" {
 }
 
 resource "aws_iam_role_policy_attachment" "github_oidc_assume_role_attachment" {
-  # provider   = aws.brr-tools
   role       = module.github_oidc_assume_role.created_role.name
   policy_arn = "arn:aws:iam::aws:policy/AdministratorAccess"
 
@@ -59,9 +48,6 @@ resource "aws_s3_bucket_versioning" "aws_tools_versioning_tf_state" {
 }
 
 module "s3_tf_state_bucket_property_name" {
-  # providers = {
-  #   aws = aws.brr-tools
-  # }
   source = "../../modules/ssm" # Where to find the module
   ######################################################################################################################
   property_name             = "${var.framework_prefix}_${var.environment_abv}_tfstate_bucket_name" # Custom defined value
@@ -70,4 +56,11 @@ module "s3_tf_state_bucket_property_name" {
   property_tags_environment = var.tag_environment_tools                                                  # Value passed in via variables.tf
   property_tags_origination = var.tag_origination_repo
   property_tags_project     = var.project_name
+}
+
+# this will also be removed on a destroy
+resource "github_actions_secret" "action_secret" {
+  repository       = var.git_repo_name
+  secret_name      = "${var.current_account}_ROLE"
+  plaintext_value  = module.github_oidc_assume_role.created_role_arn
 }

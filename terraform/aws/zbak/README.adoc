@@ -50,51 +50,36 @@ This Terraform project must be executed in _each_ Aws account that is being used
 * `terraform apply` - if you are good with the changes, apply them
 * Answer `yes` - confirm you are good with the changes
 
-== Managing the state of these project(s)
 
-As these project(s) are executed from a developers machine that means the `tfstate` is being maintained locally on the execution machine. This is not good as others can not work on this project in that case and that `tfstate` file could be lost (especially given that this project will not be executed often). To remedy this, the state should be stored in S3, but we are not setup yet to do this. Once this project has been executed in all accounts a S3 bucket will be available for the purpose of managing the `tfstate`.
 
+////////
 [CAUTION]
+THIS PROJECT IS ONLY INTENDED TO BE RAN AGAINST THE "TOOLS" ACCOUNT AND IS NOT STRUCTURED FOR A MULTI-ACCOUNT DEPLOY.
+
+A few important items to be aware of ...
+
+* This project state may not be versioned the same way as others as it is setting up the most basic parts of the account and resources created as part of this may need to be _imported_ into future Terraform projects in the event anything is to ever go wrong with the state of this project. This is also why this project is so minimal that *IF* the resources have to be manually cleaned up, it is not a major challenge.
+* S3 bucket name will include a random value to ensure uniqueness as S3 bucket names *MUST* be globally unique.
+* The random value generated *WILL NOT* change between Terraform runs (i.e. whatever the random values initial state is the value that will persist until `terraform destroy` is executed in the project)
+* If you run `terraform destroy` and there is anything in the bucket, everything will be removed _EXCEPT_ the bucket and its contents.
+
+[WARNING]
 Values contained within the `backend` block must be hard coded. Terraform does not support variables within this block.
 
-* Open `terraform.tf` in each account folder within `dpc-base-cloud-resources` project and uncomment the `backend "s3"` block
-* Update the bucket name with the name of the bucket created during execution
-** The bucket name will be returned in the outputs from the execution
-* Execute `terraform init -migrate-state`
-** This will move the state file into the S3 bucket for storage and will allow the state to be available to multiple developers
+== Migrating state - Local to Cloud and back again.
 
-*This process should be the same for _ALL_ accounts! All resources created should be the same across accounts outside the associated account number(s)*
+In the event this project has been run locally and state is on the local machine this describes how to migrate the `.tfstate` to S3.
 
-=== Migrating state back to a local machine from S3
+=== Migrating state from local to S3
 
-In the event, you need to migrate the state _back_ to a local machine to execute the following ...
+Once this project has been deployed edit and uncomment the `backend` block in `terrafrom.tf`. Next, execute `terraform init -migrate-state` and answer yes. This will migrate the local state to the S3 bucket.
 
-* Open `terraform.tf` in the terraform project folder and comment out the `backend "s3"` block
-* Execute `terraform init -migrate-state`
+=== Migrate state from S3 to local
 
-Now the state should be back on the local machine, and it should be possible to delete the state manually from the S3 bucket.
+If you need to migrate the state from the cloud to your local machine ...
 
-== Clean Up
-
-In order to delete all resources created with this project, execute ...
-
-* `terraform destroy`
-* `yes`
-
-=== Data Protections
-
-Please be aware that once the S3 bucket that is created has any form of contents when running `terraform destroy` the bucket will fail to delete as a protection measure.
-
-[source, shell]
-----
-module.s3_tf_state_bucket.aws_s3_bucket.create_bucket: Destroying... [id=idc-dpc-tf-state-zjy5gcny]
-╷
-│ Error: deleting S3 Bucket (idc-dpc-tf-state-zjy5gcny): operation error S3: DeleteBucket, https response error StatusCode: 409, RequestID: NC3CQYAR7M0TFX6Q, HostID: f+TezhscePiGvPfrIlBUG7Z7kw0TotjU9kCu/A/+Ir67JliOQZbDVPoLjJsogFX7TVGVE5c89Og=, api error BucketNotEmpty: The bucket you tried to delete is not empty. You must delete all versions in the bucket.
-│
-│
-----
-
-To get a clean destroy run, you will be required to manually remove the data from the bucket.
+* comment out the entire `backend` block in `terrafrom.tf`
+* execute - `terraform init -migrate-state` and answer yes
 
 == Terraform Locking
 

@@ -1,12 +1,8 @@
 # What cloud platform are you using and what is the default region
 provider "aws" {
+  alias               = "brr-tools"
   region              = "us-east-2"
   shared_config_files = ["~/.aws/config"]
   # shared_credentials_files = ["~/.aws/credentials"]
   profile = "brr-tools-admin"
-}
-
-provider "github" {
-  owner = var.git_org_name
-  token = var.github_token
 }

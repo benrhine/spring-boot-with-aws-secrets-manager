@@ -24,7 +24,7 @@ resource "random_string" "suffix" {
 
 
 module "aws_tools_github_oidc_assume_role" {
-  source                        = "../modules/iam-roles"                                   # Where to find the module
+  source                        = "../../modules/iam-roles"                                   # Where to find the module
   ######################################################################################################################   # Value passed in via variables.tf
   iam_role_name                 = "github_oidc_assume_role"
   iam_role_description          = "This is the base role that will be assumed"
@@ -71,7 +71,7 @@ resource "aws_iam_role_policy_attachment" "external_tools_service_role_attachmen
 # ids-dpc-terraform-state
 
 module "s3" {
-  source                        = "../modules/s3"                                          # Where to find the module
+  source                        = "../../modules/s3"                                          # Where to find the module
   ######################################################################################################################
   #   aws_region                    = data.aws_region.current.name                            # Value retrieved in data.tf
   #   aws_account                   = data.aws_caller_identity.current.account_id             # Value retrieved in data.tf
@@ -212,7 +212,7 @@ resource "aws_dynamodb_table" "terraform-lock-table" {
 # }
 
 module "ssm_1" {
-  source                        = "../modules/ssm"                                          # Where to find the module
+  source                        = "../../modules/ssm"                                          # Where to find the module
   ######################################################################################################################
   property_name                 = "tf.brr.tools.build.s3.bucket.name"  # Custom defined value
   property_description          = "Deployment bucket created by "        # Custom defined value
@@ -234,7 +234,7 @@ module "ssm_1" {
 # }
 
 module "ssm_3" {
-  source                        = "../modules/ssm"                                          # Where to find the module
+  source                        = "../../modules/ssm"                                          # Where to find the module
   ######################################################################################################################
   property_name                 = "tf_brr_tools_tfstate_bucket_name"  # Custom defined value
   property_description          = "Deployment bucket created by "        # Custom defined value

@@ -5,7 +5,9 @@ data "aws_iam_policy_document" "github_oidc_assume_role" {
       "sts:AssumeRoleWithWebIdentity"
     ]
     principals {
+      # Note that in CF and SLS i have this set to the PROD account not non-prod
       identifiers = ["arn:aws:iam::${data.aws_caller_identity.current.account_id}:oidc-provider/token.actions.githubusercontent.com"]
+      # identifiers = [aws_iam_openid_connect_provider.github.arn]
       type        = "Federated"
     }
     condition {
@@ -20,11 +22,10 @@ data "aws_iam_policy_document" "github_oidc_assume_role" {
     #   values   = ["refs/heads/main"]
     # }
 
-    # This will require additional configuration for different branches
     condition {
       test     = "StringLike"
       variable = "token.actions.githubusercontent.com:sub"
-      values   = ["repo:${var.git_org_name}/${var.git_repo_name}:ref:refs/heads/main"]
+      values   = ["repo:benrhine/spring-boot-with-aws-secrets-manager:ref:refs/heads/main"]
     }
   }
 }

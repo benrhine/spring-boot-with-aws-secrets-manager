@@ -50,7 +50,7 @@ module "aws_tools_github_oidc_assume_role" {
   providers = {
     aws = aws.brr-tools
   }
-  source = "../../modules/iam-roles" # Where to find the module
+  source = "../../../modules/iam-roles" # Where to find the module
   ######################################################################################################################   # Value passed in via variables.tf
   iam_role_name          = "github_oidc_assume_role"
   iam_role_description   = "This is the base role that will be assumed"
@@ -98,7 +98,7 @@ module "aws_tools_s3_tf_state_bucket" {
   providers = {
     aws = aws.brr-tools
   }
-  source = "../../modules/s3" # Where to find the module
+  source = "../../../modules/s3" # Where to find the module
   ######################################################################################################################
   create_bucket_name  = "${var.business_area_name}-${var.team_name}-${var.framework_prefix}-state-${random_string.tools_suffix.result}"
   s3_tags_environment = var.tag_environment_tools # Value passed in via variables.tf
@@ -138,7 +138,7 @@ module "aws_tools_s3_tf_state_bucket_property_name" {
   providers = {
     aws = aws.brr-tools
   }
-  source = "../../modules/ssm" # Where to find the module
+  source = "../../../modules/ssm" # Where to find the module
   ######################################################################################################################
   property_name             = "${var.framework_prefix}_${var.environment_abv}_tools_tfstate_bucket_name" # Custom defined value
   property_description      = "Deployment bucket created by "                                            # Custom defined value

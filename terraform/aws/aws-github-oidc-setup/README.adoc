@@ -1,0 +1,66 @@
+= Aws GitHub OIDC Setup
+
+This Terraform project configures the OIDC connection between GitHub and Aws.
+
+[NOTE]
+This project configures a single item, the OIDC connection
+
+[IMPORTANT]
+This project has special state considerations
+
+== Execute the project
+
+=== Prerequisite for execution
+
+* `aws sso login` - make sure you are authenticated to Aws otherwise you will receive an error
+** Note: Terraform can see Aws is logged in via this line `shared_config_files      = ["~/.aws/config"]` in the `provider.tf` file
+** Warning: This variant is only used on projects that are not intended to be executed through CI/CD!
+
+== How To Execute
+
+* `terraform init` - initialize the project
+* `terraform validate` - check that terraform is valid
+* `terraform fmt` - make sure terraform is formatted correctly
+* `terraform plan` - dry run and review the changes that will be made
+* `terraform apply` - if you are good with the changes, apply them
+* Answer `yes` - confirm you are good with the changes
+
+== Managing the state of this project
+
+As this project is executed from a developers machine that means the `tfstate` is being maintained locally on the execution machine. This is not good as others can not work on this project in that case and that `tfstate` file could be lost (especially given that this project will not be executed often). To remedy this, the state should be stored in S3, but we are not setup yet to do this. Make sure an S3 bucket is available prior to executing the following steps ...
+
+[CAUTION]
+Values contained within the `backend` block must be hard coded. Terraform does not support variables within this block.
+
+* Open `terraform.tf` in the `aws-github-oidc-setup` project and uncomment the `backend "s3"` block
+* Update the bucket name with the name of the bucket created in "Step 1"
+** The bucket name will be returned in the outputs from the execution of "Step 1"
+* Execute `terraform init -migrate-state`
+** This will move the state file into the S3 bucket for storage and will allow the state to be available to multiple developers
+
+=== Migrating state back to a local machine from S3
+
+In the event, you need to migrate the state _back_ to a local machine to execute the following ...
+
+* Open `terraform.tf` in the terraform project folder and comment out the `backend "s3"` block
+* Execute `terraform init -migrate-state`
+
+Now the state should be back on the local machine, and it should be possible to delete the state manually from the S3 bucket.
+
+== Clean Up
+
+In order to delete all resources created with this project, execute ...
+
+* `terraform destroy`
+* `yes`
+
+== Terraform Locking
+
+Terraform now supports version locking natively on S3. Meaning that the creation of a dynamo table is no longer required to facilitate state locking. This is enabled by adding `use_lockfile = true` to the `backend` block.
+
+[NOTE]
+What is the purpose of state locking? State locking is to ensure that 2 people working on the same project at the same time do not corrupt the state or cause problems for one another.
+
+== Reference
+
+* XXX
